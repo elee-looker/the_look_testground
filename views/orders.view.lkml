@@ -21,6 +21,12 @@ view: orders {
     sql: ${TABLE}.created_at ;;
   }
 
+  dimension_group: created2 {
+    type: time
+    datatype: datetime
+    sql: DATETIME(${TABLE}.created_at) ;;
+  }
+
   dimension_group: delivered {
     type: time
     timeframes: [
@@ -81,6 +87,13 @@ view: orders {
   dimension: user_id {
     type: number
     sql: ${TABLE}.user_id ;;
+  }
+
+  parameter: something {
+    allowed_value: {
+      label: "foo"
+      value: "foo"
+    }
   }
 
   measure: count {
