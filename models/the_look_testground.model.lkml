@@ -10,3 +10,5 @@ explore: orders_extended {
     relationship: many_to_one
   }
 }
+
+explore: more_users {}

@@ -2,7 +2,6 @@ view: users {
   sql_table_name: `looker-private-demo.thelook.users`;;
 
   dimension: id {
-    hidden: yes
     primary_key: yes
     type: number
     sql: ${TABLE}.id ;;

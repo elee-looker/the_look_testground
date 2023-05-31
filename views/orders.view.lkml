@@ -21,10 +21,21 @@ view: orders {
     sql: ${TABLE}.created_at ;;
   }
 
+  dimension: datetime_test {
+    type: date_time
+    datatype: datetime
+    sql: ${TABLE}.created_at ;;
+  }
+
   dimension_group: created2 {
     type: time
     datatype: datetime
     sql: DATETIME(${TABLE}.created_at) ;;
+  }
+
+  dimension: created3 {
+    datatype: timestamp
+    sql: ${TABLE}.created_at  ;;
   }
 
   dimension_group: delivered {
@@ -87,6 +98,13 @@ view: orders {
   dimension: user_id {
     type: number
     sql: ${TABLE}.user_id ;;
+  }
+
+  dimension: viewname_liquid {
+    type: number
+    # label: "{{ [_view._name] }}"
+    # sql: {% if [_view._name]._in_query %} 1 {% else %} 2 {% endif %} ;;
+    sql: ${TABLE}.status ;;
   }
 
   parameter: something {
