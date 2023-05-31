@@ -21,21 +21,16 @@ view: orders {
     sql: ${TABLE}.created_at ;;
   }
 
+  dimension: timestamp_test {
+    type: date_time
+    datatype: timestamp
+    sql: ${TABLE}.created_at ;;
+  }
+
   dimension: datetime_test {
     type: date_time
     datatype: datetime
     sql: ${TABLE}.created_at ;;
-  }
-
-  dimension_group: created2 {
-    type: time
-    datatype: datetime
-    sql: DATETIME(${TABLE}.created_at) ;;
-  }
-
-  dimension: created3 {
-    datatype: timestamp
-    sql: ${TABLE}.created_at  ;;
   }
 
   dimension_group: delivered {
