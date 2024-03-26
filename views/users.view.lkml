@@ -1,6 +1,11 @@
 view: users {
   sql_table_name: `looker-private-demo.thelook.users`;;
 
+  parameter: testparam {
+    type: unquoted
+    default_value: "orders"
+  }
+
   dimension: id {
     primary_key: yes
     type: number
@@ -53,6 +58,7 @@ view: users {
   }
 
   dimension: gender {
+    full_suggestions: no
     type: string
     sql: ${TABLE}.gender ;;
   }
@@ -98,6 +104,17 @@ view: users {
   measure: count {
     type: count
     drill_fields: [detail*]
+  }
+
+  measure: nonsense_avg {
+    type: average
+    sql: ${age} ;;
+  }
+
+  measure: nonsense_avg_distinct {
+    type: average_distinct
+    sql: ${age} ;;
+    sql_distinct_key: ${created_date} ;;
   }
 
   # ----- Sets of fields for drilling ------

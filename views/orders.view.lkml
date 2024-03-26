@@ -1,10 +1,12 @@
 view: orders {
-  sql_table_name: `looker-private-demo.thelook.orders`;;
+  # sql_table_name: `looker-private-demo.thelook.orders`;;
+  sql_table_name: `looker-private-demo.thelook.{% parameter users.testparam %}` ;;
 
   dimension: order_id {
     primary_key: yes
     type: number
     sql: ${TABLE}.order_id ;;
+    description: "Unique ID for the order"
   }
 
   dimension_group: created {
@@ -19,6 +21,41 @@ view: orders {
       year
     ]
     sql: ${TABLE}.created_at ;;
+  }
+
+  dimension: raw {
+    type: date_raw
+    sql: ${TABLE}.created_at ;;
+  }
+
+  dimension: month_frame {
+    sql: ${created_month} ;;
+    html: {{ rendered_value | date: "%B %Y" }} ;;
+  }
+
+  dimension: month_frame2 {
+    sql: ${created_month} ;;
+    html: {{ rendered_value | date: "%c" }} ;;
+  }
+
+  dimension: date_test1 {
+    sql: ${created_date} ;;
+    html: {{ rendered_value | date: "%B %Y"}} ;;
+  }
+
+  dimension: date_test2 {
+    sql: ${created_date} ;;
+    html: {{ rendered_value | date: "%c"}} ;;
+  }
+
+  dimension: week_test1 {
+    sql: ${created_week} ;;
+    html: {{ rendered_value | date: "%B %Y"}} ;;
+  }
+
+  dimension: date_week2 {
+    sql: ${created_week} ;;
+    html: {{ rendered_value | date: "%c"}} ;;
   }
 
   dimension: timestamp_test {
@@ -48,8 +85,10 @@ view: orders {
   }
 
   dimension: gender {
+    full_suggestions: no
     type: string
     sql: ${TABLE}.gender ;;
+    drill_fields: [order_id, users.last_name, users.id, users.first_name, order_items.count]
   }
 
   dimension: num_of_item {
@@ -93,6 +132,7 @@ view: orders {
   dimension: user_id {
     type: number
     sql: ${TABLE}.user_id ;;
+    description: "User ID of the customer"
   }
 
   dimension: viewname_liquid {
@@ -100,6 +140,11 @@ view: orders {
     # label: "{{ [_view._name] }}"
     # sql: {% if [_view._name]._in_query %} 1 {% else %} 2 {% endif %} ;;
     sql: ${TABLE}.status ;;
+  }
+
+  dimension: bad_sql {
+    type: number
+    sql: hi this is bad sql ;;
   }
 
   parameter: something {
@@ -111,6 +156,7 @@ view: orders {
 
   measure: count {
     type: count
+    # filters: [status: "Cancelled"]
     drill_fields: [order_id, users.last_name, users.id, users.first_name, order_items.count]
   }
 }
